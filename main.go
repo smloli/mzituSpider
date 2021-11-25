@@ -42,7 +42,7 @@ func saveImage(urlList *[]string, dir string, referer *string) {
 		f, err := os.Create(path)
 		if err != nil {
 			fmt.Println("图片保存失败！")
-			return
+			continue
 		}
 		defer f.Close()
 		resp, _ := getData(v, referer)
