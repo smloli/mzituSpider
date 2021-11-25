@@ -1,4 +1,34 @@
 #### Golang爬取妹子图 自拍系列（颜值高）
+***
+##### 编译源码
+
+> 1. 下载Go语言安装包并安装
+>
+>    https://go.dev/（官网）
+>
+>    https://studygolang.com/dl（镜像站）
+>
+> 2. 配置Go语言环境
+>
+>    * cmd执行命令
+>
+>      ```bash
+>      go env -w GO111MODULE=on
+>      go env -w GOPROXY=https://goproxy.cn,direct
+>      ```
+>    
+> 3. 编译
+>
+>    *  打开cmd进入源码目录（也可以直接在源码所在目录的地址栏，输入cmd）
+>
+>    * cmd执行命令
+>
+>      ```bash
+>      go build main.go
+>      ```
+>
+>      
+
 
 ![1.png](https://dd-static.jd.com/ddimg/jfs/t1/208392/33/10569/144571/619e4846Ed1c84748/832c53fe70855a15.png)
 ![2.png](https://dd-static.jd.com/ddimg/jfs/t1/156393/34/25651/30614/619e4846Ede0f2197/31186b49b3ffa311.png)
