@@ -4,9 +4,9 @@
 
 > 1. 下载Go语言安装包并安装
 >
->    https://go.dev/（官网）
+>    https://go.dev/ （官网）
 >
->    https://studygolang.com/dl（镜像站）
+>    https://studygolang.com/dl （镜像站）
 >
 > 2. 配置Go语言环境
 >
