@@ -32,11 +32,16 @@ var count int
 
 func saveImage(urlList *[]string, dir string, referer *string) {
 	for i, v := range *urlList {
-		path := dir + fmt.Sprintf("%03d.jpg", i + 1)
+		path := dir + fmt.Sprintf("%03d.jpg ", i + 1)
 		count++
 		fmt.Printf("%d %s", count, path)
 		if _, err := os.Stat(path); err == nil {
-			fmt.Printf(" 已下载\n")
+			fmt.Printf("已下载\n")
+			continue
+		}
+		resp, _ := getData(v, referer)
+		// 空数据就不写入
+		if *resp == nil {
 			continue
 		}
 		f, err := os.Create(path)
@@ -45,9 +50,8 @@ func saveImage(urlList *[]string, dir string, referer *string) {
 			continue
 		}
 		defer f.Close()
-		resp, _ := getData(v, referer)
 		f.Write(*resp)
-		fmt.Println(" 下载成功")
+		fmt.Println("下载成功")
 	}
 }
 
