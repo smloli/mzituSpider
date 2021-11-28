@@ -2,21 +2,23 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
-	"net/http"
-	"io/ioutil"
+	"regexp"
 	"strings"
 	"time"
 )
 
 var client = &http.Client{}
+var referer string
 
-func getData(url string, referer *string) (*[]byte, string) {
+func getData(url string) (*[]byte, string) {
+	fmt.Println(referer)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Mobile Safari/537.36")
-	req.Header.Set("referer", *referer)
+	req.Header.Set("referer", referer)
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("404 请求失败！")
@@ -30,7 +32,7 @@ func getData(url string, referer *string) (*[]byte, string) {
 // 下载计数
 var count int
 
-func saveImage(urlList *[]string, dir string, referer *string) {
+func saveImage(urlList *[]string, dir string) {
 	for i, v := range *urlList {
 		path := dir + fmt.Sprintf("%03d.jpg ", i + 1)
 		count++
@@ -39,7 +41,7 @@ func saveImage(urlList *[]string, dir string, referer *string) {
 			fmt.Printf("已下载\n")
 			continue
 		}
-		resp, _ := getData(v, referer)
+		resp, _ := getData(v)
 		// 空数据就不写入
 		if *resp == nil {
 			continue
@@ -81,7 +83,6 @@ func init() {
 
 func main() {
 	var url string
-	var referer string
 	// 匹配分类 标题 图集链接数据
 	re := regexp.MustCompile(`rel="category">#(.+?)#</a></div>[\s\S]+?_blank">(.+?)</a></h2>[\s\S]+?<div class="uk-inline">(.+?)\n`)
 	// 匹配图集链接
@@ -95,10 +96,10 @@ func main() {
 			url = "https://mmzztt.com/beauty/"
 			referer = url
 		} else {
+			referer = url
 			url = "https://mmzztt.com/beauty/page/" + fmt.Sprintf("%d", page)
-			referer = "https://mmzztt.com/beauty/page/" + fmt.Sprintf("%d", page - 1)
 		}
-		resp, status := getData(url, &referer)
+		resp, status := getData(url)
 		if status != "200" {
 			fmt.Println("下载完毕！")
 			return
@@ -118,7 +119,7 @@ func main() {
 				urlList[i] = strings.Replace(string(k[1]), "thumb300", "mw2000", -1)
 			}
 			// 保存图片
-			saveImage(&urlList, dir, &referer)
+			saveImage(&urlList, dir)
 			// 延时3秒
 			time.Sleep(3 * time.Second)
 		}
