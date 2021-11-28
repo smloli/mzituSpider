@@ -15,7 +15,6 @@ var client = &http.Client{}
 var referer string
 
 func getData(url string) (*[]byte, string) {
-	fmt.Println(referer)
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Mobile Safari/537.36")
 	req.Header.Set("referer", referer)
