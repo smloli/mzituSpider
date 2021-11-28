@@ -59,7 +59,7 @@ func saveImage(urlList *[]string, dir string) {
 
 // 检测版本
 func init() {
-	const version = "v1.0.1"
+	const version = "v1.0.2"
 	url := "https://docs.qq.com/dop-api/opendoc?id=DT3F6UmhxS3VaQXZ1&normal=1"
 	resp, err := http.Get(url)
 	if err != nil {
